@@ -1,0 +1,15 @@
+{
+  "name": "mpob-user-level-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mandate Decision Studio (user level): step-by-step B20/B30 biodiesel mandate app for MPOB / MOF staff",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test test.mjs",
+    "shoot": "node shoot.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
