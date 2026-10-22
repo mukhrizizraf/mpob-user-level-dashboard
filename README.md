@@ -4,7 +4,7 @@ A step-by-step app for MPOB / MOF staff to decide each month whether Malaysia's 
 Part of the MPOB-UKM Endowment Chair Research Grant 2026, Topic 3: a sustainable self-funding framework for the national biodiesel mandate.
 
 **Open the app:** `index.html` (one self-contained file, works offline). If GitHub Pages is on, it is served at
-`https://mukhrizizraf.github.io/MPOB-USER-LEVEL-DASHBOARD/`.
+`https://mukhrizizraf.github.io/mpob-user-level-dashboard/`.
 
 > **All values are simulated placeholders, not official MPOB figures.** The controls explore saved research results; they do
 > not rerun the research models. B15 is a proposed safeguard only. The Windfall Profit Levy (WPL) is a baseline reference only,
