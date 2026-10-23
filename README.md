@@ -91,7 +91,7 @@ npm run shoot -- shots   # optional: headless Chrome/Edge walk-through + the rev
 | `src/motion.js` | Shared spring engine, swipe gesture, CSS spring curves |
 | `src/theme.js` | Shared look selector (six looks) |
 | `src/home.js` | Shared Home page: the living hive, the biodiesel journey, sponsor marks |
-| `brand/` | Optional sponsor logos `mpob.png` and `ukm.png` (svg, jpg and webp also work), embedded at build time |
+| `brand/` | Sponsor logos `mpob.svg` and `ukm.png`, embedded small in the Home hero at build time. The MPOB and UKM logos are the trademarks of the Malaysian Palm Oil Board and Universiti Kebangsaan Malaysia, shown only to credit their support of this study. |
 | `src/app.js` | Tabs, steps, live bindings, input handling |
 | `src/lottie-icons.mjs` | Project-authored Lottie result marks (B30 check, B20 hold, B15 caution) |
 | `data/` | Research snapshot (simulated) and the snapshot month's ingredient inputs |
