@@ -16,6 +16,7 @@ Part of the MPOB-UKM Endowment Chair Research Grant 2026, Topic 3: a sustainable
 
 | Tab | Objective |
 |---|---|
+| Home | To decide, each month, whether Malaysia's biodiesel blend stays at B20 or moves to B30. |
 | OBJ1 · Price | To develop an automatic pricing mechanism for biodiesel (APM-Bio). |
 | OBJ2 · Shock test | To evaluate whether a Biodiesel Stabilisation Fund (BSF) can withstand price shocks. |
 | OBJ3 · Money sources | To determine the best sources of funding for the BSF. |
@@ -24,14 +25,22 @@ Part of the MPOB-UKM Endowment Chair Research Grant 2026, Topic 3: a sustainable
 
 ## Using it
 
+- **Home** opens first, after a short atmospheric preloader (once per browser session; any tap, key or scroll skips it): fog
+  gathers into one drop of palm oil while a count runs to 100, then bursts open into the page. Home is a living hive that fills the whole
+  screen: a swarm of glowing particles drifts over a honeycomb and fog, breaks up to drift over the page when you scroll down, and flows
+  together in the hero into the story of
+  the mandate (oil palm fruit, palm oil, biodiesel at the pump, B5, B7, B10, B20, B30, and MPOB × UKM). Move the pointer through it
+  or tap to stir it; tap a blend in *Malaysia's biodiesel journey* to see it form. *Pause* stops it. The MPOB and UKM marks sit small
+  in the hero as sponsors. All artwork is drawn in code; years are when each blend was introduced (the roll-out was phased).
 - **Move between steps** with the numbered rings, the Next and Back buttons, the arrow keys, or by **swiping the step card** left or right.
 - **Type an exact value** in the box beside a slider and press Enter. Text that is not a number, or a value outside the slider's range,
   is rejected with a message and changes nothing. Escape cancels.
 - **Your scenario.** When you change a value, the top bar shows "Your scenario" and the results say which values changed.
   *Restore snapshot* puts every value back to the reviewed snapshot. On Decision now, *Use the objective settings* clears only the
   values set on that page.
-- **Appearance.** The round button at the top right opens the theme selector: Automatic, Light and Dark, plus finishes inspired by
-  iPhone (Starlight, Midnight, Natural Titanium, Desert, Ultramarine) and iPad (Sky Blue, Blush, Space Grey). Saved on your device only.
+- **Appearance.** The round button at the top right offers six looks: Classic (follows the device, light or dark), Bloom, Tonal, Citrus,
+  Volt and Mono. Each changes the shapes of the step rings and icons, the icon strokes, buttons, chips, sliders, switches, tabs and type,
+  not only the colours. Saved on your device only.
 - **Share a place.** The address ends in `#obj2-5` style anchors, so a link opens on the same tab and step. Values reset on reload.
 - **Print decision summary** (Decision now, step 4) prints the inputs, their sources, the rule checks, the blend and the caveats.
 
@@ -46,6 +55,8 @@ calm motion that follows the reduced-motion setting live (CR19, CR20), a snapsho
 
 ## Motion
 
+The Home hive (`src/home.js`, canvas) runs one animation loop that pauses when the page is hidden or scrolled away, stops when you
+leave Home, and is a still picture under *Reduce motion*.
 `src/motion.js` is a small spring engine (no library). Every animation starts from what is on screen, carries velocity and can be
 interrupted: tabs fold away like a foldable phone's hinge, step cards follow your finger and keep its momentum, the selection pill
 stretches toward the tab you pick, and the verdict settles when the blend changes. Numbers are written at once; only containers move.
@@ -78,7 +89,9 @@ npm run shoot -- shots   # optional: headless Chrome/Edge walk-through + the rev
 | `src/shared.css` | Shared with the Developer level: mobile baseline, review fixes, motion hooks, themes, print |
 | `src/model.js` | V3 calculation rules and number formats |
 | `src/motion.js` | Shared spring engine, swipe gesture, CSS spring curves |
-| `src/theme.js` | Shared theme selector |
+| `src/theme.js` | Shared look selector (six looks) |
+| `src/home.js` | Shared Home page: the living hive, the biodiesel journey, sponsor marks |
+| `brand/` | Optional sponsor logos `mpob.png` and `ukm.png` (svg, jpg and webp also work), embedded at build time |
 | `src/app.js` | Tabs, steps, live bindings, input handling |
 | `src/lottie-icons.mjs` | Project-authored Lottie result marks (B30 check, B20 hold, B15 caution) |
 | `data/` | Research snapshot (simulated) and the snapshot month's ingredient inputs |
@@ -88,6 +101,6 @@ npm run shoot -- shots   # optional: headless Chrome/Edge walk-through + the rev
 
 ## Design rules to keep
 
-- Every tab: one 36px objective statement starting with "To ...", then the same ring-step infographic.
+- Home included: every tab opens with one 36px objective statement starting with "To ...", then the same ring-step infographic.
 - Every step title starts with "To ...". Step colours follow the same order on every tab.
 - One idea per step: one control group, one live result. Detail belongs in the Developer level.

@@ -89,7 +89,7 @@ const DEFAULTS = {
   capture: BASE_CAPTURE, productionPct: 100, governmentSeed: 100, b30Auth: String(BASE.b30Authorised) === 'true',
   pmeMode: 'latest', ...INGREDIENTS, brent: 100, scenario: 'A', horizon: '60',
 };
-const S = { ...DEFAULTS, dec: {}, tab: 'obj1', step: { obj1: 0, obj2: 0, obj3: 0, obj4: 0, decision: 0 }, cause: 'commit' };
+const S = { ...DEFAULTS, dec: {}, tab: 'home', step: { home: 0, obj1: 0, obj2: 0, obj3: 0, obj4: 0, decision: 0 }, cause: 'commit' };
 
 /* ── Scenario state: snapshot values, your edits, and Decision-page overrides ── */
 // Inputs that change a result. Case, period and Brent choices only select saved results.
@@ -372,6 +372,10 @@ function financingCompare() {
 /* ── Tabs and steps ──────────────────────────────────── */
 const TABS = [
   {
+    id: 'home', label: 'Home', sub: '', kicker: 'Home', home: true, steps: [],
+    title: 'To decide, each month, whether Malaysia’s biodiesel blend stays at B20 or moves to B30.',
+  },
+  {
     id: 'obj1', label: 'OBJ1', sub: 'Price', kicker: 'Objective 1',
     title: 'To develop an automatic pricing mechanism for biodiesel (APM-Bio).',
     steps: [
@@ -535,6 +539,17 @@ const TABS = [
     ],
   },
 ];
+// Home: the living hive (shared home.js) and a card per objective.
+function homeConfig() {
+  return {
+    kicker: 'Biodiesel mandate study · User level',
+    title: TABS[0].title,
+    lead: 'B30 needs three checks to pass at the same time: biodiesel is cheaper than diesel, the Biodiesel Stabilisation Fund is above its safety limit, and the government has approved B30. Otherwise the blend stays at B20.',
+    cta: `<button type="button" class="btn btn-primary c1" data-tab="obj1"><span>Start with Objective 1</span>${ICON.chev}</button><button type="button" class="btn btn-ghost" data-tab="decision"><span>Go to Decision now</span></button>`,
+    cards: TABS.filter(t => !t.home).map(t => ({ tab: t.id, label: t.sub ? `${t.label} · ${t.sub}` : t.label, title: t.title,
+      meta: `${t.steps.length} steps`, icon: ICON[t.steps.at(-1).icon] })),
+  };
+}
 const tabById = id => TABS.find(t => t.id === id) ?? TABS[0];
 const tabIndex = id => TABS.findIndex(t => t.id === id);
 
@@ -571,6 +586,7 @@ function movePill(animate = true) {
 // Tab change: the old page folds away toward the side it leaves by, the new one unfolds from the other side
 // (a foldable phone's hinge). Both are springs, so a second tap mid-fold retargets from where things are.
 function pageHtml(tab) {
+  if (tab.home) return HOME.html(homeConfig());
   const n = tab.steps.length;
   return `<section class="hero"><div class="hero-kicker">${tab.kicker}</div><h1>${tab.title}</h1><div class="hero-meta">${n} steps. ${tab.id === 'decision' ? 'Changes here stay on this page.' : 'Follow them in order, or swipe the card.'}</div></section>
     <div class="flow-wrap"><nav class="flow" aria-label="Steps">${tab.steps.map((s, i) => `<button type="button" class="node c${i + 1}" data-go="${i}" style="--i:${i}">
@@ -609,7 +625,7 @@ function renderPage(dir = 0) {
     glow.to({ x: -dir * 60 }, { response: 0.5 }).then(() => glow.to({ x: 0 }, { response: 1.4 }));
   }
   if (dir) window.scrollTo({ top: 0, behavior: 'auto' });
-  renderStage(0);
+  if (tab.home) { HOME.start(el); writeHash(); } else renderStage(0);
   sweepAnims();
 }
 
@@ -695,16 +711,15 @@ function goTab(id, { instant = false, step } = {}) {
   if (id === S.tab) { if (step !== undefined) renderStage(0); return; }
   const dir = Math.sign(tabIndex(id) - tabIndex(S.tab));
   S.tab = id;
-  try { localStorage.setItem('mpob-user-tab', id); } catch {}
   movePill(!instant);
   renderPage(instant ? 0 : dir);
 }
 function writeHash() {
-  const hash = `#${S.tab}-${S.step[S.tab] + 1}`;
+  const hash = S.tab === 'home' ? '#home' : `#${S.tab}-${S.step[S.tab] + 1}`;
   if (location.hash !== hash) try { history.replaceState(null, '', hash); } catch {}
 }
 function readHash() {
-  const m = /^#(obj[1-4]|decision)(?:-(\d+))?$/.exec(location.hash);
+  const m = /^#(home|obj[1-4]|decision)(?:-(\d+))?$/.exec(location.hash);
   if (!m) return null;
   const tab = tabById(m[1]);
   return { tab: tab.id, step: Math.min(tab.steps.length, Math.max(1, Number(m[2] ?? 1))) - 1 };
@@ -960,7 +975,6 @@ $('#status').innerHTML = `<i></i><span class="status-long">${statusWord} · data
 $('#scenario').innerHTML = `<span id="scenario-text"></span><button type="button" class="btn-link" data-restore>Restore snapshot</button>`;
 const fromHash = readHash();
 if (fromHash) { S.tab = fromHash.tab; S.step[fromHash.tab] = fromHash.step; }
-else try { const saved = localStorage.getItem('mpob-user-tab'); if (TABS.some(t => t.id === saved)) S.tab = saved; } catch {}
 renderTabs();
 renderPage(0);
 if (!reduced()) { const first = $('.page'); const f = MOTION.fluid(first).set({ y: 16, o: 0 }); f.to({ y: 0, o: 1 }, { response: 0.5 }).then(done => { if (done) f.clear(); }); }
