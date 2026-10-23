@@ -1,0 +1,11 @@
+{
+  "period": "2026-04",
+  "masterFile": "MPOB_V3_Codex_Master.xlsx",
+  "row": 201,
+  "methanol": 1647.041175,
+  "glycerol": 2951.055675,
+  "cells": {
+    "methanol": "E201",
+    "glycerol": "F201"
+  }
+}
