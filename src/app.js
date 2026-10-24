@@ -541,7 +541,9 @@ const TABS = [
 ];
 // Home: the living hive (shared home.js) and a card per objective.
 function homeConfig() {
+  const snap = policyState({ mops: DEFAULTS.mops, pme: DEFAULTS.pme, fund: DEFAULTS.fund, b30Auth: DEFAULTS.b30Auth }, A);
   return {
+    blend: snap.mandate, blendNote: `Reviewed snapshot · ${SNAP_MONTH}`,
     kicker: 'Biodiesel mandate study · User level',
     title: TABS[0].title,
     lead: 'B30 needs three checks to pass at the same time: biodiesel is cheaper than diesel, the Biodiesel Stabilisation Fund is above its safety limit, and the government has approved B30. Otherwise the blend stays at B20.',
@@ -936,7 +938,7 @@ document.addEventListener('keydown', event => {
 document.addEventListener('click', event => {
   const t = event.target.closest('button, summary');
   if (!t) return;
-  if (t.dataset.tab) return goTab(t.dataset.tab);
+  if (t.dataset.tab) return goTab(t.dataset.tab, t.dataset.step !== undefined ? { step: Number(t.dataset.step) } : {}); // Home links can open a given step
   if (t.dataset.go !== undefined) return goStep(Number(t.dataset.go));
   if (t.hasAttribute('data-back')) return goStep(S.step[S.tab] - 1);
   if (t.hasAttribute('data-next')) {

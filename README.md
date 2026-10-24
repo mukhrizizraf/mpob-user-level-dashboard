@@ -30,9 +30,10 @@ Part of the MPOB-UKM Endowment Chair Research Grant 2026, Topic 3: a sustainable
   screen: a swarm of glowing particles drifts over a honeycomb and fog, breaks up to drift over the page when you scroll down, and flows
   together in the hero into the story of
   the mandate (oil palm fruit, palm oil, biodiesel at the pump, B5, B7, B10, B20, B30, and MPOB × UKM). Move the pointer through it
-  or tap to stir it. Free particles turn as a slow spiral vortex that follows the page as you scroll. *How the studio decides*
-  shows the rule at the vortex's eye: a glowing palm-oil rosette with its five steps orbiting it (price gap, fund, approval, decide,
-  blend). Tap a blend in *Malaysia's biodiesel journey* to see it form. *Pause* stops it. The MPOB and UKM marks sit small
+  or tap to stir it. Free particles turn as a slow spiral vortex that follows the page as you scroll. *From palm to pump* is a sunlit
+  scene: palm-oil drops fall from a fruit bunch into a vessel of diesel and the golden share fills to 20% (B20) or 30% (B30). Choose
+  B20 or B30 to pour it; the five steps underneath (palm oil, price gap, fund, approval, blend) each open the step that works it out.
+  Tap a blend in *Malaysia's biodiesel journey* to see it form. *Pause* stops it. The MPOB and UKM marks sit small
   in the hero as sponsors. All artwork is drawn in code; years are when each blend was introduced (the roll-out was phased).
 - **Move between steps** with the numbered rings, the Next and Back buttons, the arrow keys, or by **swiping the step card** left or right.
 - **Type an exact value** in the box beside a slider and press Enter. Text that is not a number, or a value outside the slider's range,
