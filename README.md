@@ -25,23 +25,24 @@ Part of the MPOB-UKM Endowment Chair Research Grant 2026, Topic 3: a sustainable
 
 ## Using it
 
-- **Home** opens first, after a short atmospheric preloader (once per browser session; any tap, key or scroll skips it): fog
-  gathers into one drop of palm oil while a count runs to 100, then bursts open into the page. Home is a living hive that fills the whole
-  screen: a swarm of glowing particles drifts over a honeycomb and fog, breaks up to drift over the page when you scroll down, and flows
-  together in the hero into the story of
-  the mandate (oil palm fruit, palm oil, biodiesel at the pump, B5, B7, B10, B20, B30, and MPOB × UKM). Move the pointer through it
-  or tap to stir it. Free particles turn as a slow spiral vortex. Below the hero, *Malaysia's biodiesel journey* is one long
-  camera move through an oil palm fruit bunch drawn in light. The scene stays pinned while you scroll (or swipe, on a phone) and
-  opens through a drop-shaped keyhole: the bunch lets its fruit go (B5 2011, B7 2014, B10 2019), rings gather and the B20 ring fills
-  one fifth with palm gold, a flower opens for B30 and its three checks, its petals scatter (the fund), and an iris gathers around
-  the four inputs. Six screens of words take turns, each with buttons that open the step it describes. Tap a chapter in the bar to
-  jump to it, or press **Play** (or *Watch the journey* in the hero) to run it without scrolling; any touch, wheel or key hands
-  control back. Under Reduce motion it becomes one still picture and a column of words. *Pause* stops the hive. The MPOB and UKM
-  marks sit small in the hero as sponsors. All artwork is drawn in code; years are when each blend was introduced (the roll-out was
-  phased). The objectives live in the tab bar.
-- **Tabs** sit in an app tab bar with an icon over each label. On a phone they move to a bottom bar within thumb reach, and the
-  top bar slims to one row.
-- **Move between steps** with the numbered rings, the Next and Back buttons, the arrow keys, or by **swiping the step card** left or right.
+- **Home** opens first and is one thing only: *Malaysia's biodiesel journey*, one long camera move through an oil palm
+  fruit bunch drawn in light. The scene stays pinned while you scroll (or swipe, on a phone) and opens through a drop-shaped
+  keyhole: the bunch lets its fruit go (B5 2011, B7 2014, B10 2019), rings gather and the B20 ring fills one fifth with palm gold,
+  a flower opens for B30 and its three checks, its petals scatter (the fund), and an iris gathers around the four inputs. Six
+  screens of words take turns, each with buttons that open the step it describes; the last one carries the MPOB and UKM marks as
+  sponsors. Tap a chapter in the bar to jump to it, or press **Play** to run it without scrolling; any touch, wheel or key hands
+  control back. Under Reduce motion it becomes one still picture and a column of words. All artwork is drawn in code; years are
+  when each blend was introduced (the roll-out was phased). The objectives live in the tabs.
+- **The living hive** is the moving background of every objective and the Decision page: a swarm of glowing particles over a
+  honeycomb and fog, turning as a slow spiral vortex in the colour of the step on show. Under the step cards it **writes the step
+  in hand** ("Set diesel price"); pick another step and the words scatter and the swarm writes the next ones. Scroll down and the
+  words break up into the background. Move the pointer through it or tap open ground to stir it. The pause button in the top bar
+  stops it on every page.
+- **The steps stand in a Mirror Hall**: a row of tall cards of slowly flowing marbled liquid, one per step in its colour, veined
+  with silver and reflected on a glossy floor. The step in hand is lifted and brightest, steps done keep their colour and a tick,
+  steps ahead are washed out. The liquid stirs where your finger or pointer touches a card.
+- **Tabs** sit at the top, as pills; on a phone they get their own row under the brand and scroll sideways.
+- **Move between steps** with the step cards, the Next and Back buttons, the arrow keys, or by **swiping the step card** left or right.
 - **Type an exact value** in the box beside a slider and press Enter. Text that is not a number, or a value outside the slider's range,
   is rejected with a message and changes nothing. Escape cancels.
 - **Your scenario.** When you change a value, the top bar shows "Your scenario" and the results say which values changed.
@@ -63,8 +64,10 @@ calm motion that follows the reduced-motion setting live (CR19, CR20), a snapsho
 
 ## Motion
 
-The Home hive (`src/home.js`, canvas) runs one animation loop that pauses when the page is hidden or scrolled away, stops when you
-leave Home, and is a still picture under *Reduce motion*.
+The hive (`src/home.js`, canvas) runs one animation loop for the whole app; it rests while the page is hidden or the journey
+fills the screen, and is a still picture under *Reduce motion*. The Mirror Hall (`src/hall.js`, one WebGL canvas behind the step
+row) rests when the row is off screen, draws one still frame under *Reduce motion*, and leaves the original rings in place on a
+device without WebGL.
 `src/motion.js` is a small spring engine (no library). Every animation starts from what is on screen, carries velocity and can be
 interrupted: tabs fold away like a foldable phone's hinge, step cards follow your finger and keep its momentum, the selection pill
 stretches toward the tab you pick, and the verdict settles when the blend changes. Numbers are written at once; only containers move.
@@ -98,8 +101,9 @@ npm run shoot -- shots   # optional: headless Chrome/Edge walk-through + the rev
 | `src/model.js` | V3 calculation rules and number formats |
 | `src/motion.js` | Shared spring engine, swipe gesture, CSS spring curves |
 | `src/theme.js` | Shared look selector (six looks) |
-| `src/home.js` | Shared Home page: the living hive, the biodiesel journey (one long camera move), sponsor marks |
-| `brand/` | Sponsor logos `mpob.svg` and `ukm.png`, embedded small in the Home hero at build time. The MPOB and UKM logos are the trademarks of the Malaysian Palm Oil Board and Universiti Kebangsaan Malaysia, shown only to credit their support of this study. |
+| `src/home.js` | Shared: the biodiesel journey on Home (one long camera move, sponsor marks) and the living hive behind every page, which writes the step in hand |
+| `src/hall.js` | Shared: the Mirror Hall step cards (marbled liquid and reflections, WebGL) |
+| `brand/` | Sponsor logos `mpob.svg` and `ukm.png`, embedded small on the journey's last screen at build time. The MPOB and UKM logos are the trademarks of the Malaysian Palm Oil Board and Universiti Kebangsaan Malaysia, shown only to credit their support of this study. |
 | `src/app.js` | Tabs, steps, live bindings, input handling |
 | `src/lottie-icons.mjs` | Project-authored Lottie result marks (B30 check, B20 hold, B15 caution) |
 | `data/` | Research snapshot (simulated) and the snapshot month's ingredient inputs |
@@ -109,6 +113,7 @@ npm run shoot -- shots   # optional: headless Chrome/Edge walk-through + the rev
 
 ## Design rules to keep
 
-- Home included: every tab opens with one 36px objective statement starting with "To ...", then the same ring-step infographic.
+- Every objective and Decision tab opens with one 36px objective statement starting with "To ...", then the same Mirror Hall of steps.
+  Home is the journey only, with few words; its objective statement is kept for screen readers.
 - Every step title starts with "To ...". Step colours follow the same order on every tab.
 - One idea per step: one control group, one live result. Detail belongs in the Developer level.
