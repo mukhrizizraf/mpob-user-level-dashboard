@@ -40,8 +40,7 @@ Part of the MPOB-UKM Endowment Chair Research Grant 2026, Topic 3: a sustainable
 - **Your scenario.** When you change a value, the top bar shows "Your scenario" and the results say which values changed.
   *Restore snapshot* puts every value back to the reviewed snapshot. On Decision now, *Use the objective settings* clears only the
   values set on that page.
-- **Appearance.** The round button at the top right offers six looks: Classic (follows the device, light or dark), Bloom, Tonal, Citrus,
-  Volt and Mono. Each changes the shapes of the step rings and icons, the icon strokes, buttons, chips, sliders, switches, tabs and type,
+- **Appearance.** The round button at the top right offers six looks: Classic (follows the device, light or dark), Classic dark (always dark), Bloom, Tonal, Citrus and Mono. Each changes the shapes of the step rings and icons, the icon strokes, buttons, chips, sliders, switches, tabs and type,
   not only the colours. Saved on your device only.
 - **Share a place.** The address ends in `#obj2-5` style anchors, so a link opens on the same tab and step. Values reset on reload.
 - **Print decision summary** (Decision now, step 4) prints the inputs, their sources, the rule checks, the blend and the caveats.
