@@ -30,11 +30,17 @@ Part of the MPOB-UKM Endowment Chair Research Grant 2026, Topic 3: a sustainable
   screen: a swarm of glowing particles drifts over a honeycomb and fog, breaks up to drift over the page when you scroll down, and flows
   together in the hero into the story of
   the mandate (oil palm fruit, palm oil, biodiesel at the pump, B5, B7, B10, B20, B30, and MPOB × UKM). Move the pointer through it
-  or tap to stir it. Free particles turn as a slow spiral vortex that follows the page as you scroll. *From palm to pump* is a sunlit
-  scene: palm-oil drops fall from a fruit bunch into a vessel of diesel and the golden share fills to 20% (B20) or 30% (B30). Choose
-  B20 or B30 to pour it; the five steps underneath (palm oil, price gap, fund, approval, blend) each open the step that works it out.
-  Tap a blend in *Malaysia's biodiesel journey* to see it form. *Pause* stops it. The MPOB and UKM marks sit small
-  in the hero as sponsors. All artwork is drawn in code; years are when each blend was introduced (the roll-out was phased).
+  or tap to stir it. Free particles turn as a slow spiral vortex. Below the hero, *Malaysia's biodiesel journey* is one long
+  camera move through an oil palm fruit bunch drawn in light. The scene stays pinned while you scroll (or swipe, on a phone) and
+  opens through a drop-shaped keyhole: the bunch lets its fruit go (B5 2011, B7 2014, B10 2019), rings gather and the B20 ring fills
+  one fifth with palm gold, a flower opens for B30 and its three checks, its petals scatter (the fund), and an iris gathers around
+  the four inputs. Six screens of words take turns, each with buttons that open the step it describes. Tap a chapter in the bar to
+  jump to it, or press **Play** (or *Watch the journey* in the hero) to run it without scrolling; any touch, wheel or key hands
+  control back. Under Reduce motion it becomes one still picture and a column of words. *Pause* stops the hive. The MPOB and UKM
+  marks sit small in the hero as sponsors. All artwork is drawn in code; years are when each blend was introduced (the roll-out was
+  phased). The objectives live in the tab bar.
+- **Tabs** sit in an app tab bar with an icon over each label. On a phone they move to a bottom bar within thumb reach, and the
+  top bar slims to one row.
 - **Move between steps** with the numbered rings, the Next and Back buttons, the arrow keys, or by **swiping the step card** left or right.
 - **Type an exact value** in the box beside a slider and press Enter. Text that is not a number, or a value outside the slider's range,
   is rejected with a message and changes nothing. Escape cancels.
@@ -92,7 +98,7 @@ npm run shoot -- shots   # optional: headless Chrome/Edge walk-through + the rev
 | `src/model.js` | V3 calculation rules and number formats |
 | `src/motion.js` | Shared spring engine, swipe gesture, CSS spring curves |
 | `src/theme.js` | Shared look selector (six looks) |
-| `src/home.js` | Shared Home page: the living hive, the biodiesel journey, sponsor marks |
+| `src/home.js` | Shared Home page: the living hive, the biodiesel journey (one long camera move), sponsor marks |
 | `brand/` | Sponsor logos `mpob.svg` and `ukm.png`, embedded small in the Home hero at build time. The MPOB and UKM logos are the trademarks of the Malaysian Palm Oil Board and Universiti Kebangsaan Malaysia, shown only to credit their support of this study. |
 | `src/app.js` | Tabs, steps, live bindings, input handling |
 | `src/lottie-icons.mjs` | Project-authored Lottie result marks (B30 check, B20 hold, B15 caution) |

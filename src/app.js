@@ -539,17 +539,13 @@ const TABS = [
     ],
   },
 ];
-// Home: the living hive (shared home.js) and a card per objective.
+// Home: the living hive and the journey (shared home.js); the objectives live in the tab bar.
 function homeConfig() {
-  const snap = policyState({ mops: DEFAULTS.mops, pme: DEFAULTS.pme, fund: DEFAULTS.fund, b30Auth: DEFAULTS.b30Auth }, A);
   return {
-    blend: snap.mandate, blendNote: `Reviewed snapshot · ${SNAP_MONTH}`,
     kicker: 'Biodiesel mandate study · User level',
     title: TABS[0].title,
     lead: 'B30 needs three checks to pass at the same time: biodiesel is cheaper than diesel, the Biodiesel Stabilisation Fund is above its safety limit, and the government has approved B30. Otherwise the blend stays at B20.',
     cta: `<button type="button" class="btn btn-primary c1" data-tab="obj1"><span>Start with Objective 1</span>${ICON.chev}</button><button type="button" class="btn btn-ghost" data-tab="decision"><span>Go to Decision now</span></button>`,
-    cards: TABS.filter(t => !t.home).map(t => ({ tab: t.id, label: t.sub ? `${t.label} · ${t.sub}` : t.label, title: t.title,
-      meta: `${t.steps.length} steps`, icon: ICON[t.steps.at(-1).icon] })),
   };
 }
 const tabById = id => TABS.find(t => t.id === id) ?? TABS[0];
@@ -609,6 +605,9 @@ function renderPage(dir = 0) {
       old.style.transform = ''; const rect = old.getBoundingClientRect(); f.write();
       const layer = $('#fold-layer');
       Object.assign(old.style, { position: 'absolute', top: `${rect.top}px`, left: `${rect.left}px`, width: `${rect.width}px`, margin: '0', transformOrigin: dir > 0 ? '0% 30%' : '100% 30%' });
+      // A page much taller than the screen (Home's long story) folds only the part on screen, around its middle.
+      const vh = innerHeight;
+      if (rect.height > vh * 2) Object.assign(old.style, { clipPath: `inset(${Math.max(0, -rect.top)}px 0 ${Math.max(0, rect.bottom - vh)}px 0)`, transformOrigin: `${dir > 0 ? '0%' : '100%'} ${Math.max(0, -rect.top) + vh * 0.3}px` });
       old.classList.add('is-leaving'); old.inert = true; old.setAttribute('aria-hidden', 'true');
       layer.appendChild(old);
       f.to({ x: -dir * rect.width * 0.3, ry: dir * 16, s: 0.9, o: 0, blur: 3 }, { response: 0.4, damping: 1 }).then(() => { old.remove(); sweepAnims(); });
