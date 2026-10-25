@@ -38,9 +38,10 @@ Part of the MPOB-UKM Endowment Chair Research Grant 2026, Topic 3: a sustainable
   in hand** ("Set diesel price"); pick another step and the words scatter and the swarm writes the next ones. Scroll down and the
   words break up into the background. Move the pointer through it or tap open ground to stir it. The pause button in the top bar
   stops it on every page.
-- **The steps stand in a Mirror Hall**: a row of tall cards of slowly flowing marbled liquid, one per step in its colour, veined
-  with silver and reflected on a glossy floor. The step in hand is lifted and brightest, steps done keep their colour and a tick,
-  steps ahead are washed out. The liquid stirs where your finger or pointer touches a card.
+- **Each step box shows a moving picture of its step**: the diesel pump, palm fruit beside the biodiesel flask, a balance
+  weighing diesel against biodiesel, the break-even crossing, the signal flag, the fund tank, the BSL coin, the B30 stamp, the
+  B15/B20/B30 ladder and the blended drop. Drawn in code on a ground in the step colour, reflected on a glossy floor. The step in
+  hand is lifted and brightest, steps done keep their colour and a tick, steps ahead are washed out.
 - **Tabs** sit at the top, as pills; on a phone they get their own row under the brand and scroll sideways.
 - **Move between steps** with the step cards, the Next and Back buttons, the arrow keys, or by **swiping the step card** left or right.
 - **Type an exact value** in the box beside a slider and press Enter. Text that is not a number, or a value outside the slider's range,
@@ -49,7 +50,18 @@ Part of the MPOB-UKM Endowment Chair Research Grant 2026, Topic 3: a sustainable
   *Restore snapshot* puts every value back to the reviewed snapshot. On Decision now, *Use the objective settings* clears only the
   values set on that page.
 - **Appearance.** The round button at the top right offers six looks: Classic (follows the device, light or dark), Classic dark (always dark), Bloom, Tonal, Citrus and Mono. Each changes the shapes of the step rings and icons, the icon strokes, buttons, chips, sliders, switches, tabs and type,
-  not only the colours. Saved on your device only.
+  not only the colours. Bloom, Tonal and Citrus are each their own world: Bloom is a blush-to-lilac sky with frosted glass cards,
+  pastel-bright steps and bouncy motion; Tonal is oat paper with moss, terracotta and ochre steps, serif headings, leaf-shaped
+  cards and slow calm motion; Citrus is warm white with a halftone dot screen, bold black outlines, hard shadows and quick snappy
+  motion. The hive behind the pages takes each look's ground colours. Saved on your device only.
+- **Sound.** Quiet cues made live in the browser (no sound files), in two families: touches get dry clicks (a crisp click on a
+  step box, Back or Next; a softer one on choices, chips and switches; light detent ticks while a slider moves), and events get
+  soft notes from one warm scale with a small room echo (two glass notes when a page opens, a pop as a step card lands, a short
+  chord when the B20/B30/B15 verdict changes, a shimmer for a new look; on Home, notes climbing with the Slide to start knob,
+  bells at each chapter and kalimba notes while the camera moves). Nothing plays while nothing moves. Sound wakes on the first tap; turn it off with the
+  round mute button at the bottom right of every page, or the Sound switch in the Appearance menu (`src/sound.js`).
+- **Slide to start.** Home opens with a "Slide to start the journey" control: slide or tap the knob and the journey plays by
+  itself; scrolling or swiping still works. If a visitor stops part-way, a small "carry on" hint appears (`src/guide.js`).
 - **Share a place.** The address ends in `#obj2-5` style anchors, so a link opens on the same tab and step. Values reset on reload.
 - **Print decision summary** (Decision now, step 4) prints the inputs, their sources, the rule checks, the blend and the caveats.
 
@@ -65,9 +77,16 @@ calm motion that follows the reduced-motion setting live (CR19, CR20), a snapsho
 ## Motion
 
 The hive (`src/home.js`, canvas) runs one animation loop for the whole app; it rests while the page is hidden or the journey
-fills the screen, and is a still picture under *Reduce motion*. The Mirror Hall (`src/hall.js`, one WebGL canvas behind the step
-row) rests when the row is off screen, draws one still frame under *Reduce motion*, and leaves the original rings in place on a
-device without WebGL.
+fills the screen, and is a still picture under *Reduce motion*. The step pictures (`src/art.js`, inline SVG) each
+move on their own (a drip, swaying fronds, a waving flag, falling coins, a flipping calendar), tilt and shift in layers under the
+pointer, and a light sweeps across the step in hand. Five follow the live numbers: the balance tips by the price gap, the flag
+turns green or amber, the shield turns red when the fund is short, the B30 stamp comes down when approval is on, and the ladder,
+the drop and the savings jar move to the blend and the savings share. They rest while the row is off screen and stand still under
+*Reduce motion*. The Mirror Hall (`src/hall.js`) stays in the build but neither level mounts it any more.
+The step cards arrive through `src/morph.js`: when an objective or Decision now opens, the cards of the page being left break
+into dust in their colours, the dust spirals into a vortex over the step row, and the new cards spin out of it, fly up in an arc
+and drop into their places with a small bounce before handing over to the real cards. The hive and its writing are untouched.
+The flying cards are copies in a fixed layer, so the real buttons stay usable; under *Reduce motion* the cards simply appear.
 `src/motion.js` is a small spring engine (no library). Every animation starts from what is on screen, carries velocity and can be
 interrupted: tabs fold away like a foldable phone's hinge, step cards follow your finger and keep its momentum, the selection pill
 stretches toward the tab you pick, and the verdict settles when the blend changes. Numbers are written at once; only containers move.
@@ -104,6 +123,10 @@ npm run shoot -- shots   # optional: headless Chrome/Edge walk-through + the rev
 | `src/home.js` | Shared: the biodiesel journey on Home (one long camera move, sponsor marks) and the living hive behind every page, which writes the step in hand |
 | `src/hall.js` | Shared: the Mirror Hall step cards (marbled liquid and reflections, WebGL) |
 | `brand/` | Sponsor logos `mpob.svg` and `ukm.png`, embedded small on the journey's last screen at build time. The MPOB and UKM logos are the trademarks of the Malaysian Palm Oil Board and Universiti Kebangsaan Malaysia, shown only to credit their support of this study. |
+| `src/art.js` | Shared: step pictures: a moving drawing of each step in its box, five of them following the live numbers (brings its own CSS) |
+| `src/sound.js` | Shared: quiet Web Audio cues (clicks, slider ticks, page notes, card pops, verdict chords, look shimmer, journey bells and kalimba notes) the mute button and the Sound switch |
+| `src/guide.js` | Shared: Slide to start the journey on Home, and the carry-on hint |
+| `src/morph.js` | Shared: step morph: old cards turn to dust, new cards spin out of a vortex, fly and drop into place (brings its own CSS) |
 | `src/app.js` | Tabs, steps, live bindings, input handling |
 | `src/lottie-icons.mjs` | Project-authored Lottie result marks (B30 check, B20 hold, B15 caution) |
 | `data/` | Research snapshot (simulated) and the snapshot month's ingredient inputs |
@@ -113,7 +136,7 @@ npm run shoot -- shots   # optional: headless Chrome/Edge walk-through + the rev
 
 ## Design rules to keep
 
-- Every objective and Decision tab opens with one 36px objective statement starting with "To ...", then the same Mirror Hall of steps.
+- Every objective and Decision tab opens with one 36px objective statement starting with "To ...", then the same row of picture steps.
   Home is the journey only, with few words; its objective statement is kept for screen readers.
 - Every step title starts with "To ...". Step colours follow the same order on every tab.
 - One idea per step: one control group, one live result. Detail belongs in the Developer level.

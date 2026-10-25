@@ -81,7 +81,7 @@ test('the snapshot check accepts the reviewed snapshot and rejects a broken one'
   assert.ok(snapshotProblems(broken).length >= 2);
 });
 test('shared files are identical in the User and Developer levels (one source, two presentations)', { skip: !inProject }, () => {
-  for (const file of ['motion.js', 'theme.js', 'home.js', 'hall.js', 'shared.css']) {
+  for (const file of ['motion.js', 'theme.js', 'home.js', 'hall.js', 'morph.js', 'art.js', 'sound.js', 'guide.js', 'shared.css']) {
     assert.equal(src(`./src/${file}`), src(`../STUDIO_DEVELOPER_LEVEL/src/${file}`), `${file} has drifted`);
   }
   const strip = text => text.replace(/^\/\/.*\n/gm, '');
