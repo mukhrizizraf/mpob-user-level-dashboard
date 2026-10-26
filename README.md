@@ -35,7 +35,7 @@ Part of the MPOB-UKM Endowment Chair Research Grant 2026, Topic 3: a sustainable
   when each blend was introduced (the roll-out was phased). The objectives live in the tabs.
 - **The living hive** is the moving background of every objective and the Decision page: a swarm of glowing particles over a
   honeycomb and fog, turning as a slow spiral vortex in the colour of the step on show. Under the step cards it **writes the step
-  in hand** ("Set diesel price"); pick another step and the words scatter and the swarm writes the next ones. Scroll down and the
+  in hand** ("Set diesel price"); pick another step and the words scatter and the swarm writes the next ones from left to right, readable in about half a second. Scroll down and the
   words break up into the background. Move the pointer through it or tap open ground to stir it. The pause button in the top bar
   stops it on every page.
 - **Each step box shows a moving picture of its step**: the diesel pump, palm fruit beside the biodiesel flask, a balance
@@ -85,7 +85,7 @@ the drop and the savings jar move to the blend and the savings share. They rest 
 *Reduce motion*. The Mirror Hall (`src/hall.js`) stays in the build but neither level mounts it any more.
 The step cards arrive through `src/morph.js`: when an objective or Decision now opens, the cards of the page being left break
 into dust in their colours, the dust spirals into a vortex over the step row, and the new cards spin out of it, fly up in an arc
-and drop into their places with a small bounce before handing over to the real cards. The hive and its writing are untouched.
+and drop into their places with a small bounce before handing over to the real cards. This happens once per page per visit: going back to an objective already seen, the cards stay still and the page just folds in. The hive and its writing are untouched.
 The flying cards are copies in a fixed layer, so the real buttons stay usable; under *Reduce motion* the cards simply appear.
 `src/motion.js` is a small spring engine (no library). Every animation starts from what is on screen, carries velocity and can be
 interrupted: tabs fold away like a foldable phone's hinge, step cards follow your finger and keep its momentum, the selection pill
