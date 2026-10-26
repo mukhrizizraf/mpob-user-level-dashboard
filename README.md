@@ -43,7 +43,7 @@ Part of the MPOB-UKM Endowment Chair Research Grant 2026, Topic 3: a sustainable
   B15/B20/B30 ladder and the blended drop. Drawn in code on a ground in the step colour, reflected on a glossy floor. The step in
   hand is lifted and brightest, steps done keep their colour and a tick, steps ahead are washed out.
 - **Tabs** sit at the top, as pills; on a phone they get their own row under the brand and scroll sideways.
-- **Move between steps** with the step cards, the Next and Back buttons, the arrow keys, or by **swiping the step card** left or right.
+- **Move between steps** with the step cards, the Next and Back buttons, the **numbered step buttons** between them (jump straight to any step, e.g. from step 5 back to step 1 in one tap), the arrow keys, or by **swiping the step card** left or right.
 - **Type an exact value** in the box beside a slider and press Enter. Text that is not a number, or a value outside the slider's range,
   is rejected with a message and changes nothing. Escape cancels.
 - **Your scenario.** When you change a value, the top bar shows "Your scenario" and the results say which values changed.
@@ -85,7 +85,7 @@ the drop and the savings jar move to the blend and the savings share. They rest 
 *Reduce motion*. The Mirror Hall (`src/hall.js`) stays in the build but neither level mounts it any more.
 The step cards arrive through `src/morph.js`: when an objective or Decision now opens, the cards of the page being left break
 into dust in their colours, the dust spirals into a vortex over the step row, and the new cards spin out of it, fly up in an arc
-and drop into their places with a small bounce before handing over to the real cards. This happens once per page per visit: going back to an objective already seen, the cards stay still and the page just folds in. The hive and its writing are untouched.
+and drop into their places with a small bounce before handing over to the real cards. This happens once per page per visit: going back to an objective already seen, the cards just pop up in place (a short spring rise, 30ms apart). The hive and its writing are untouched.
 The flying cards are copies in a fixed layer, so the real buttons stay usable; under *Reduce motion* the cards simply appear.
 `src/motion.js` is a small spring engine (no library). Every animation starts from what is on screen, carries velocity and can be
 interrupted: tabs fold away like a foldable phone's hinge, step cards follow your finger and keep its momentum, the selection pill
