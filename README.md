@@ -88,7 +88,7 @@ into dust in their colours, the dust spirals into a vortex over the step row, an
 and drop into their places with a small bounce before handing over to the real cards. This happens once per page per visit: going back to an objective already seen, the cards just pop up in place (a short spring rise, 30ms apart). The hive and its writing are untouched.
 The flying cards are copies in a layer of their own, so the real buttons stay usable; under *Reduce motion* the cards simply appear.
 The flight, the page fold and the selection pill run on the compositor as Web Animations of transform and opacity, so a busy phone cannot slow them down. A tab change answers the tap first and builds the new page after that first frame. The reasons are at the top of `src/morph.js`.
-A sideways swipe on a phone moves between the tabs, Home to Decision now; on the step card it changes step, then tab past the first or last step. The row of step boxes keeps its own scroll.
+On a phone, a sideways swipe anywhere on the page moves between the tabs, Home to Decision now. The row of step boxes keeps its own scroll. With a mouse, dragging the step card changes step.
 `src/motion.js` is a small spring engine (no library). Every animation starts from what is on screen, carries velocity and can be
 interrupted: tabs fold away like a foldable phone's hinge, step cards follow your finger and keep its momentum, the selection pill
 stretches toward the tab you pick, and the verdict settles when the blend changes. Numbers are written at once; only containers move.
