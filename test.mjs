@@ -80,7 +80,9 @@ test('the snapshot check accepts the reviewed snapshot and rejects a broken one'
   delete broken.queries.rq2_seed; broken.queries.model_assumptions.rows[0].fundSafetyMultiple = null;
   assert.ok(snapshotProblems(broken).length >= 2);
 });
-test('shared files are identical in the User and Developer levels (one source, two presentations)', { skip: !inProject }, () => {
+// Skipped in a User-only copy, which has no Developer level beside it to compare with.
+const hasDeveloperLevel = existsSync(new URL('../STUDIO_DEVELOPER_LEVEL/src/model.js', import.meta.url));
+test('shared files are identical in the User and Developer levels (one source, two presentations)', { skip: !inProject || !hasDeveloperLevel }, () => {
   for (const file of ['motion.js', 'theme.js', 'home.js', 'hall.js', 'morph.js', 'art.js', 'sound.js', 'guide.js', 'shared.css']) {
     assert.equal(src(`./src/${file}`), src(`../STUDIO_DEVELOPER_LEVEL/src/${file}`), `${file} has drifted`);
   }

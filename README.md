@@ -86,7 +86,8 @@ the drop and the savings jar move to the blend and the savings share. They rest 
 The step cards arrive through `src/morph.js`: when an objective or Decision now opens, the cards of the page being left break
 into dust in their colours, the dust spirals into a vortex over the step row, and the new cards spin out of it, fly up in an arc
 and drop into their places with a small bounce before handing over to the real cards. This happens once per page per visit: going back to an objective already seen, the cards just pop up in place (a short spring rise, 30ms apart). The hive and its writing are untouched.
-The flying cards are copies in a fixed layer, so the real buttons stay usable; under *Reduce motion* the cards simply appear.
+The flying cards are copies in a layer of their own, so the real buttons stay usable; under *Reduce motion* the cards simply appear.
+The flight, the page fold and the selection pill run on the compositor as Web Animations of transform and opacity, so a busy phone cannot slow them down. A tab change answers the tap first and builds the new page after that first frame. The reasons are at the top of `src/morph.js`.
 `src/motion.js` is a small spring engine (no library). Every animation starts from what is on screen, carries velocity and can be
 interrupted: tabs fold away like a foldable phone's hinge, step cards follow your finger and keep its momentum, the selection pill
 stretches toward the tab you pick, and the verdict settles when the blend changes. Numbers are written at once; only containers move.
@@ -126,7 +127,7 @@ npm run shoot -- shots   # optional: headless Chrome/Edge walk-through + the rev
 | `src/art.js` | Shared: step pictures: a moving drawing of each step in its box, five of them following the live numbers (brings its own CSS) |
 | `src/sound.js` | Shared: quiet Web Audio cues (clicks, slider ticks, page notes, card pops, verdict chords, look shimmer, journey bells and kalimba notes) the mute button and the Sound switch |
 | `src/guide.js` | Shared: Slide to start the journey on Home, and the carry-on hint |
-| `src/morph.js` | Shared: step morph: old cards turn to dust, new cards spin out of a vortex, fly and drop into place (brings its own CSS) |
+| `src/morph.js` | Shared: step morph: old cards turn to dust, new cards spin out of a vortex, fly and drop into place, on the compositor (brings its own CSS) |
 | `src/app.js` | Tabs, steps, live bindings, input handling |
 | `src/lottie-icons.mjs` | Project-authored Lottie result marks (B30 check, B20 hold, B15 caution) |
 | `data/` | Research snapshot (simulated) and the snapshot month's ingredient inputs |
