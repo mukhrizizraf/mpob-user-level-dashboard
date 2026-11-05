@@ -254,7 +254,7 @@ const B = {
   solword: c => !c.e.row ? 'No saved run for this choice' : num(c.e.solvency) >= num(A.solvencyTarget) ? `Meets the ${pct(A.solvencyTarget, 0)} target` : `Below the ${pct(A.solvencyTarget, 0)} target`,
   rq2Head: c => surviveHeadline(c.e),
   rq2State: c => !c.e.row ? 'na' : surviveHeadline(c.e) === 'Passes both tests' ? 'good' : num(c.e.survival6m) >= 0.9 ? 'hold' : 'bad',
-  rq2Sub: () => `${scenarioName(S.scenario)} · ${pct(S.capture, 0)} of savings paid in · ${periodLabel(S.horizon)}`,
+  rq2Sub: () => `B20 · ${scenarioName(S.scenario)} · ${pct(S.capture, 0)} of savings paid in · ${periodLabel(S.horizon)}`,
   capUntested: c => !c.e.row,
   // OBJ3
   bslRevenue: c => T(c.f.bslRevenue, v => rmMn(v, 1)),
@@ -333,7 +333,8 @@ const basisLine = out => `<p class="basis" data-out="${out}"></p>`;
 const formula = () => `PME = ${coef('const').toFixed(4)} + ${coef('cpo_lag1').toFixed(4)} × CPO(last month) + ${coef('meoh_rm').toFixed(4)} × Methanol − ${Math.abs(coef('gly_rm')).toFixed(4)} × Glycerol`;
 const fundBar = (bar, state) => `<div class="bar" style="margin-top:22px"><i data-w="${bar}" data-state-of="${state}"></i><em style="left:${FUND_LIMIT / SL.fund.max * 100}%"><b>Limit</b></em></div>`;
 const fundLimit = `Must be above ${rmMn(FUND_LIMIT, 2)} (${num(A.fundSafetyMultiple)} × recent average drawdown of ${rmMn(A.rolling12AvgB20DrawdownRmMn, 2)}).`;
-const savedRun = `Saved run · opening fund ${rmMn(A.seedCapitalRmMn)} · levy ${rmT(BASE.bslRateRmT)} · ${num(A.mcPaths).toLocaleString('en-MY')} price paths`;
+const blendTestNote = `<p class="note"><b>Tested on B20 only.</b> A pass means the fund lasts while the blend stays at B20. It is not a move to B30: Objective 4 decides that with the price gap, the fund balance and government approval. <button type="button" class="btn-link" data-tab="obj4" data-step="3">See the rule</button></p>`;
+const savedRun = `Saved run · B20 · opening fund ${rmMn(A.seedCapitalRmMn)} · levy ${rmT(BASE.bslRateRmT)} · ${num(A.mcPaths).toLocaleString('en-MY')} price paths`;
 
 function policyMap() {
   const rows = Q.rq4_map.rows.map(row => ({ cpo: num(row['CPO (RM/t)']), brent: num(row['Brent (USD/bbl)']), mandate: row.Mandate, vg: num(row['VG (RM/t)']) }));
@@ -419,7 +420,7 @@ const TABS = [
           <div class="cyc on" style="--k:var(--s6-ink);animation-delay:.5s"><b>+</b><strong>Money in</strong><span>Levy and savings</span></div><div class="cyc-op">−</div>
           <div class="cyc on" style="--k:var(--s2-ink);animation-delay:1s"><b>−</b><strong>Support paid</strong><span>When biodiesel costs more</span></div><div class="cyc-op">=</div>
           <div class="cyc on" style="--k:var(--s3-ink);animation-delay:1.5s"><b>F′</b><strong>Closing balance</strong><span>Next month’s start</span></div></div>
-          <p class="loop-note">Repeated every month across ${num(A.mcPaths).toLocaleString('en-MY')} simulated oil-price paths. The balance cannot fall below RM 0.
+          <p class="loop-note">Repeated every month on B20 across ${num(A.mcPaths).toLocaleString('en-MY')} simulated oil-price paths. The balance cannot fall below RM 0.
             <button type="button" class="btn-link replay" data-replay>${ICON.replay}<span>Replay</span></button></p>
           ${term('BSF', 'Biodiesel Stabilisation Fund: money set aside to pay the gap when biodiesel costs more than diesel.')}` },
       { icon: 'drop', short: 'To choose an oil-price case', title: 'To choose an oil-price case', chip: () => scenarioName(S.scenario), single: true,
@@ -443,6 +444,7 @@ const TABS = [
           <div class="mini-cases" role="group" aria-label="Oil-price case">${SCENARIOS.map(id => `<button type="button" class="mini-case" data-set="scenario" data-val="${id}"><div class="col"><i data-h="mc_${id}" data-state-of="mcs_${id}"></i></div><strong data-out="mcv_${id}"></strong><span>${scenarioName(id)}</span></button>`).join('')}</div>
           <p class="note">Chance the fund lasts the whole period, for each oil-price case.</p></div>
           <div><div class="out" data-state-of="rq2State"><div class="out-label">Answer</div><div class="out-big md" data-out="rq2Head"></div><div class="out-sub" data-out="rq2Sub"></div>
+            ${blendTestNote}
             <p class="note"><b>Starting money:</b> every saved search result equals ${rmMn(SEED_MAX)}, the largest amount tested, so no safe 5-year amount was found within that range.</p></div>
             <p class="limit"><b>Read with care.</b> These are saved model runs with their own assumptions. The fund model's monthly price step is still under review, so treat the probabilities as indicative.</p>
             <details class="disclose"><summary>What changes this result?</summary><p class="note">It changes with the oil-price case, the test period and the savings share, because each picks a different saved run. The levy rate, CPO production and starting money in Objective 3, and the fund balance in Objective 4, do <b>not</b> rerun this model.</p></details></div>` },
@@ -488,7 +490,7 @@ const TABS = [
         body: () => `<div class="switch-row"><div><strong id="sw-obj4">Assume B30 is approved</strong><span>A government decision. This switch only tests the rule.</span></div><button type="button" class="switch" role="switch" data-switch="b30Auth" aria-labelledby="sw-obj4"></button></div>` },
       { icon: 'flag', short: 'To apply the rule', title: 'To apply the B20 / B30 rule', chip: c => mandateLabel(c.p.mandate),
         body: () => `<div class="lights" style="grid-template-columns:1fr">${light('1 · Price gap', 'priceState', 'priceWord', '@gapShort')}${light('2 · Fund balance', 'fundState', 'fundWord', `Above ${rmMn(FUND_LIMIT)}`)}${light('3 · B30 approval', 'approvalState', 'approvalWord', 'Government decision')}</div>
-          <div>${verdict('mandate', 'mandateState', 'mandateTag', 'reason')}${basisLine('basis')}<details class="disclose"><summary>See the price map (CPO × Brent)</summary>${policyMap()}</details></div>` },
+          <div>${verdict('mandate', 'mandateState', 'mandateTag', 'reason')}${basisLine('basis')}<p class="note">The Objective 2 survival answer is not one of these checks.</p><details class="disclose"><summary>See the price map (CPO × Brent)</summary>${policyMap()}</details></div>` },
       { icon: 'bars', short: 'To compare with fixed blends', title: 'To compare cost swings with fixed blends', chip: () => `−${pct(RQ4.reduction_vs_b30, 1)} vs B30`,
         body: () => { const max = Math.max(num(RQ4.vol_b20), num(RQ4.vol_b30), num(RQ4.vol_dual));
           const bar = (label, v, k) => `<div class="vbar"><strong>${rmMn(v, 1)}</strong><div class="plot"><i style="height:${v / max * 100}%;--k:${k}"></i></div><span>${label}</span></div>`;
@@ -529,7 +531,7 @@ const TABS = [
             <div>${verdict('dMandate', 'dMandateState', 'dMandateTag', 'dReason')}${basisLine('dBasis')}</div></div>
           <div class="summary4">
             <button type="button" class="sum" data-tab="obj1" style="--k:var(--s1-ink)"><span>OBJ1 · Price</span><strong data-out="dGapShort"></strong><small>Viability gap</small></button>
-            <button type="button" class="sum" data-tab="obj2" style="--k:var(--s2-ink)"><span>OBJ2 · Shock test</span><strong>${fiveYearPasses} of ${Q.rq2_scenarios_60m.rows.length} cases</strong><small>last 5 years · baseline saved cases at 100% savings share</small></button>
+            <button type="button" class="sum" data-tab="obj2" style="--k:var(--s2-ink)"><span>OBJ2 · Shock test</span><strong>${fiveYearPasses} of ${Q.rq2_scenarios_60m.rows.length} cases</strong><small>last 5 years on B20 · baseline saved cases at 100% savings share</small></button>
             <button type="button" class="sum" data-tab="obj3" style="--k:var(--s3-ink)"><span>OBJ3 · Money sources</span><strong data-out="dFunding"></strong><small>Levy + savings · illustrative</small></button>
             <button type="button" class="sum" data-tab="obj4" style="--k:var(--s4-ink)"><span>OBJ4 · Rule</span><strong data-out="dChecks"></strong><small>B30 needs all three</small></button></div>
           <div class="reset-row">
