@@ -4,6 +4,7 @@
 
 **https://mukhrizizraf.github.io/mpob-user-level-dashboard/** works in any browser, on a phone, tablet or computer.
 Companion: the [Developer level](https://mukhrizizraf.github.io/mpob-developer-level-dashboard/), which has the evidence behind every step.
+Guide: the [Studio Guide with audio](https://mukhrizizraf.github.io/mpob-user-level-dashboard/guide-with-audio.html), a narrated walk through both levels that shows where every number comes from.
 
 A step-by-step app for MPOB / MOF staff to decide each month whether Malaysia's biodiesel mandate stays at B20 or moves to B30.
 Part of the MPOB-UKM Endowment Chair Research Grant 2026, Topic 3: a sustainable self-funding framework for the national biodiesel mandate.

@@ -231,6 +231,9 @@ const surviveHeadline = e => !e.row ? 'Not tested' : num(e.solvency) >= num(A.so
   : num(e.survival6m) >= 0.9 ? 'Passes 6 months, not the full period' : 'Does not pass';
 const periodLabel = h => String(h) === '60' ? '5 years' : `${h} months`;
 const fiveYearPasses = Q.rq2_scenarios_60m.rows.filter(row => num(row.solvency_prob) >= num(A.solvencyTarget)).length;
+// A number's label names only the settings that can change that number.
+const GAP_KEYS = ['mops', 'pmeMode', 'pme', 'cpoLag', 'methanol', 'glycerol'];
+const RULE_KEYS = [...GAP_KEYS, 'fund', 'b30Auth'];
 const basisText = keys => keys.length ? `Your scenario · changed: ${listWords(keys)}` : `Reviewed snapshot · data through ${DATA_THROUGH}`;
 
 const B = {
@@ -248,7 +251,8 @@ const B = {
   gapWord: c => c.p.gap > 0 ? 'Savings' : c.p.gap < 0 ? 'Support needed' : 'Equal prices',
   gapSentence: c => c.p.gap > 0 ? `Biodiesel is ${rm(c.p.gap, 2)}/t cheaper than diesel. Blending saves money.`
     : c.p.gap < 0 ? `Biodiesel costs ${rm(-c.p.gap, 2)}/t more than diesel. Support may be needed.` : 'Biodiesel and diesel cost the same.',
-  basis: () => basisText(sharedEdits()),
+  basis: () => basisText(sharedEdits().filter(k => GAP_KEYS.includes(k))),
+  ruleBasis: () => basisText(sharedEdits().filter(k => RULE_KEYS.includes(k))),
   edited: () => sharedEdits().length > 0,
   beCpo: c => T(c.be.cpo, v => rmT(v, 1)),
   beSub: c => `Diesel at USD ${c.be.brent}/bbl: ${rmT(c.be.mops, 1)} · CPO in ${SNAP_MONTH}: ${rmT(LATEST_CPO, 1)}`,
@@ -535,7 +539,7 @@ const TABS = [
         body: () => `<div class="switch-row"><div><strong id="sw-obj4">Assume B30 is approved</strong><span>A government decision. This switch only tests the rule.</span></div><button type="button" class="switch" role="switch" data-switch="b30Auth" aria-labelledby="sw-obj4"></button></div>` },
       { icon: 'flag', short: 'To apply the rule', title: 'To apply the B20 / B30 rule', chip: c => mandateLabel(c.p.mandate),
         body: () => `<div class="lights" style="grid-template-columns:1fr">${light('1 · Viability gap', 'priceState', 'priceWord', '@gapShort')}${light('2 · Fund balance', 'fundState', 'fundWord', `Above ${rmMn(FUND_LIMIT)}`)}${light('3 · B30 approval', 'approvalState', 'approvalWord', 'Government decision')}</div>
-          <div>${verdict('mandate', 'mandateState', 'mandateTag', 'reason')}${basisLine('basis')}<p class="note">The Objective 3 survival answer is not one of these checks.</p><details class="disclose"><summary>See the price map (CPO × Brent)</summary>${policyMap()}</details></div>` },
+          <div>${verdict('mandate', 'mandateState', 'mandateTag', 'reason')}${basisLine('ruleBasis')}<p class="note">The Objective 3 survival answer is not one of these checks.</p><details class="disclose"><summary>See the price map (CPO × Brent)</summary>${policyMap()}</details></div>` },
       { icon: 'bars', short: 'To compare with fixed blends', title: 'To compare cost swings with fixed blends', chip: () => `−${pct(RQ4.reduction_vs_b30, 1)} vs B30`,
         body: () => { const max = Math.max(num(RQ4.vol_b20), num(RQ4.vol_b30), num(RQ4.vol_dual));
           const bar = (label, v, k) => `<div class="vbar"><strong>${rmMn(v, 1)}</strong><div class="plot"><i style="height:${v / max * 100}%;--k:${k}"></i></div><span>${label}</span></div>`;
